@@ -1,7 +1,7 @@
 //const fs = require('fs')
 import fs from 'fs'
 
-class UserManager {
+class User {
     constructor(path) {
         this.users = []     //para guardar en la memoria todos los usuarios
         this.path = path    //para guardar en la memoria la ruta del archivo
@@ -23,10 +23,10 @@ class UserManager {
             return 'data recovered'
         }
     }
-    async add_user({ name,last_name,age,carts }) {
+    async add_user({ name,last_name,age,url_photo }) {
         try {
             //defino el objeto que necesito agregar al array
-            let data = { name,last_name,age,carts }
+            let data = { name,last_name,age,url_photo }
             //si la memoria tiene usuarios
             if (this.users.length>0) {
                 //busco el id del último elemento y le sumo 1
@@ -44,10 +44,10 @@ class UserManager {
             //sobre-escribo el archivo
             await fs.promises.writeFile(this.path,data_json)
             console.log('id´s created user: '+data.id)
-            return 'id´s user: '+data.id
+            return { uid: data.id }
         } catch(error) {
             console.log(error)
-            return 'error: creating user'
+            return null
         }
     }
     read_users() {
@@ -98,20 +98,6 @@ class UserManager {
     }
 }
 
-let manager = new UserManager('./data/users.json')
-
-async function manage() {
-    await manager.add_user({ name:'igna',last_name:'borraz',age:32,carts:[] })
-    await manager.add_user({ name:'nico',last_name:'lopez',age:37,carts:[] })
-    await manager.add_user({ name:'igna',last_name:'chapero',age:100,carts:[] })
-    await manager.add_user({ name:'mario',last_name:'castro',age:35,carts:[] })
-    await manager.add_user({ name:'luis',last_name:'aguilar',age:35,carts:[] })
-    await manager.update_user(1,{ name:'ignacio' })
-    await manager.update_user(2,{ name:'nicolas', carts: ['celular'] })
-    await manager.update_user(3,{ age:30 })
-    await manager.destroy_user(1)
-    await manager.destroy_user(4)
-}
-//manage()
+let manager = new User('./src/data/users.json')
 
 export default manager
