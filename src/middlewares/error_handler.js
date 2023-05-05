@@ -1,5 +1,5 @@
 const error_handler = (error, req, res, next) => {
-	console.error(error.stack)
+	console.error(error)
 	return res.status(500).json({
 		status: 500,
 		method: req.method,
