@@ -18,7 +18,7 @@ router.get(
                         {name:'ale', photo:'https://www.grupoanton.es/ntn/wp-content/branding-personal.jpg'},
                         {name:'flor', photo: 'https://www.grupoanton.es/ntn/wp-content/branding-personal.jpg'}],
                     title: 'index',
-                    script: './public/products.js'
+                    script: '/public/conection.js'
                 }        
             )
         } catch (error) {
