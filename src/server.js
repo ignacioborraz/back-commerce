@@ -1,7 +1,7 @@
 import server from "./app.js"
 import { Server } from "socket.io"
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 const ready = ()=> console.log('server ready on port '+PORT)
 
 let http_server = server.listen(PORT,ready)
