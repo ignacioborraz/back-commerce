@@ -2,10 +2,39 @@
   {
     "products": [
       {
-        "id": 2,
-        "stock": 10
+        "pid": 1,
+        "quantity": 22
+      },
+      {
+        "pid": 3,
+        "quantity": 15
+      },
+      {
+        "pid": 2,
+        "quantity": 15
       }
     ],
-    "id": 2
+    "cid": 1
+  },
+  {
+    "products": [
+      {
+        "pid": 2,
+        "quantity": 30
+      },
+      {
+        "pid": 1,
+        "quantity": 30
+      }
+    ],
+    "cid": 2
+  },
+  {
+    "products": [],
+    "cid": 3
+  },
+  {
+    "products": [],
+    "cid": 4
   }
 ]
