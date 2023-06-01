@@ -2,16 +2,16 @@
   {
     "products": [
       {
-        "pid": 1,
-        "quantity": 22
-      },
-      {
         "pid": 3,
-        "quantity": 15
+        "quantity": 10
       },
       {
         "pid": 2,
-        "quantity": 15
+        "quantity": 13
+      },
+      {
+        "pid": 1,
+        "quantity": 1
       }
     ],
     "cid": 1
