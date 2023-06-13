@@ -3,15 +3,19 @@
     "products": [
       {
         "pid": 3,
-        "quantity": 10
+        "quantity": 19
       },
       {
         "pid": 2,
-        "quantity": 13
+        "quantity": 89
       },
       {
         "pid": 1,
-        "quantity": 1
+        "quantity": 5
+      },
+      {
+        "pid": 5,
+        "quantity": 0
       }
     ],
     "cid": 1

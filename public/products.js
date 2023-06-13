@@ -1,1 +1,0 @@
-console.log('hola! esta es la pagina de products')

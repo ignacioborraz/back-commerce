@@ -10,7 +10,7 @@ const router = Router()
 router.post('/', validator_product, next_id_product, async(req,res,next)=> {
     try {
         await manager.add_product(req.body)
-        return res.json({ status:201,message:'Product created!' })
+        return res.status(201).json({ status:201,message:'Product created!' })
     } catch(error) {
         next(error)
     }
