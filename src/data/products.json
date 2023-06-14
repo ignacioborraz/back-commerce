@@ -3,7 +3,7 @@
     "title": "title1",
     "description": "description1",
     "price": 1,
-    "stock": 17,
+    "stock": 21,
     "url_photo": "https://cdn-icons-png.flaticon.com/512/3114/3114633.png",
     "pid": 1,
     "total": 1,
@@ -13,7 +13,7 @@
     "title": "title2",
     "description": "description2",
     "price": 2,
-    "stock": 25,
+    "stock": 26,
     "url_photo": "https://cdn-icons-png.flaticon.com/512/1474/1474644.png",
     "pid": 2,
     "total": 26,
@@ -92,7 +92,7 @@
     "title": "prod11",
     "description": "desc11",
     "price": 303,
-    "stock": 30,
+    "stock": 29,
     "url_photo": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
     "pid": 11
   },
@@ -114,5 +114,21 @@
     "url_photo": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
     "pid": 13,
     "total": 10
+  },
+  {
+    "title": "hola",
+    "description": "hola",
+    "price": "1",
+    "stock": "1",
+    "url_photo": "hola",
+    "pid": 14
+  },
+  {
+    "title": "chau",
+    "description": "chau",
+    "price": "1",
+    "stock": "1",
+    "url_photo": "chau",
+    "pid": 15
   }
 ]
