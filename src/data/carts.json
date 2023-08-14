@@ -7,11 +7,11 @@
       },
       {
         "pid": 2,
-        "quantity": 88
+        "quantity": 85
       },
       {
         "pid": 1,
-        "quantity": 1
+        "quantity": 6
       },
       {
         "pid": 5,
@@ -19,6 +19,10 @@
       },
       {
         "pid": 11,
+        "quantity": 2
+      },
+      {
+        "pid": 6,
         "quantity": 1
       }
     ],
