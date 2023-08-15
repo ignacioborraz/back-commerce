@@ -13,7 +13,7 @@
     "title": "title2",
     "description": "description2",
     "price": 2,
-    "stock": 32,
+    "stock": 33,
     "url_photo": "https://cdn-icons-png.flaticon.com/512/1474/1474644.png",
     "pid": 2,
     "total": 26,
@@ -49,7 +49,7 @@
     "title": "title6",
     "description": "description6",
     "price": 10,
-    "stock": 48,
+    "stock": 50,
     "url_photo": "https://cdn-icons-png.flaticon.com/512/8727/8727881.png",
     "pid": 6
   },
