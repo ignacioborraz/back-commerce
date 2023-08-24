@@ -21,7 +21,7 @@ sessions_router.post('/login',(req,res,next)=> {
         req.session.data = req.body
         return res.status(200).json({
             session: req.session,
-            message: req.session.data.email+' inicio sesión'
+            message: req.session.data.mail+' inicio sesión'
         })
     } catch (error) {
         next(error)

@@ -8,12 +8,17 @@ import { __dirname } from './utils.js'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
+import MongoStore from 'connect-mongo'
 
 const server = express()
 
 //middlewares
 server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use(expressSession({
+    store: MongoStore.create({
+        mongoUrl: process.env.LINK_DB,
+        ttl:60*60*24*7
+    }),
     secret: process.env.SECRET_SESSION,
     resave: true,
     saveUninitialized: true
