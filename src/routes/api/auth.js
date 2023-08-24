@@ -1,27 +1,27 @@
 import { Router } from "express"
-import uploader from '../../middlewares/multer.js'
-import manager from "../../managers/User.js"
+import User from "../../models/user.model.js"
+import is_form_ok from "../../middlewares/is_form_ok.js"
+import is_8_char from "../../middlewares/is_8_char.js"
 
 const router = Router()
 
-router.post('/signup',uploader.single('url_photo'), async(req,res,next)=> {
-    console.log('hola');
+router.post('/register', is_form_ok, is_8_char ,async(req,res,next)=> {
     try {
-        if (!req.file) {
-            return res.send('no se pudo cargar la imagen')
-        }
-        console.log(req.file)
-        const { name,last_name,age } = req.body
-        let user = { name,last_name,age }   //construyo el usuario
-        user.url_photo = req.file.path      //agrego la ruta de la foto
-        await manager.add_user(user)        //creo un usuario
-        return res.json({                   //envio la respuesta
-            status: 201,
-            message: 'user created'
+        let one = await User.create(req.body)
+        return res.status(201).json({
+            success: true,
+            message: 'user registered',
+            user_id: one._id
         })
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
+})
+
+router.post('/signin', async(req,res,next)=> {
+})
+
+router.post('/signout', async(req,res,next)=> {
 })
 
 export default router
