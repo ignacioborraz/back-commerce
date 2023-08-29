@@ -9,6 +9,8 @@ import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 import MongoStore from 'connect-mongo'
+import inicializePassport from './middlewares/passport.js'
+import passport from 'passport'
 
 const server = express()
 
@@ -23,6 +25,9 @@ server.use(expressSession({
     resave: true,
     saveUninitialized: true
 }))
+inicializePassport()
+server.use(passport.initialize())
+server.use(passport.session())
 server.use(morgan('dev'))
 server.use('',express.static('public'))
 server.use('/img',express.static('img'))

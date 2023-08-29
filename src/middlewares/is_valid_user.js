@@ -2,10 +2,11 @@ import User from "../models/user.model.js"
 
 export default async function(req,res,next) {
     try {
-        const { mail,password } = req.body
+        const { mail } = req.body
         let one = await User.findOne({ mail })
-        if (one && one.password===password) {
-            next()
+        console.log(one);
+        if (one) {
+            return next()
         } else {
             return res.status(400).json({
                 status: 400,
@@ -15,6 +16,6 @@ export default async function(req,res,next) {
             })
         }
     } catch (error) {
-        next(error)
+        return next(error)
     }
 }
