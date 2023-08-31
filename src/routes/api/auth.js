@@ -6,6 +6,7 @@ import create_hash from "../../middlewares/create_hash.js";
 import is_valid_user from "../../middlewares/is_valid_user.js";
 import is_valid_pass from "../../middlewares/is_valid_pass.js";
 import passport from "passport";
+import create_token from "../../middlewares/create_token.js";
 
 const router = Router();
 
@@ -71,14 +72,16 @@ router.post(
   is_8_char,
   passport.authenticate("login"),
   is_valid_pass,
+  create_token,
   async (req, res, next) => {
     try {
       req.session.mail = req.body.mail;
       req.session.role = req.user.role;
       return res.status(200).json({
         user: req.user,
-        session: req.session,
+        //session: req.session,
         message: req.session.mail + " inicio sesión",
+        token: req.session.token
       });
     } catch (error) {
       next(error);
@@ -86,7 +89,7 @@ router.post(
   }
 );
 
-router.post("/signout", async (req, res, next) => {
+router.get("/signout", async (req, res, next) => {
   try {
     req.session.destroy();
     return res.status(200).json({
@@ -98,5 +101,20 @@ router.post("/signout", async (req, res, next) => {
     next(error);
   }
 });
+
+router.get('/github',passport.authenticate('github',{ scope:['user:mail']}),(req,res)=>{})
+router.get('/github/callback',passport.authenticate('github',{}),(req,res,next)=>{
+  try {
+    req.session.mail = req.user.mail;
+    req.session.role = req.user.role;
+    return res.status(200).json({
+      success:true,
+      user:req.user
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 export default router;

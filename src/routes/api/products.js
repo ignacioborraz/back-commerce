@@ -4,11 +4,12 @@ import validator_product from '../../middlewares/validator_product.js'
 import next_id_product from '../../middlewares/next_id_product.js'
 import exists_product from "../../middlewares/exists_product.js"
 import valid_properties from "../../middlewares/valid_props_product.js"
-import auth from '../../middlewares/auth.js'
+import is_admin from '../../middlewares/is_admin.js'
+import verify_token from "../../middlewares/verify_token.js"
 
 const router = Router()
 
-router.post('/', auth, validator_product, next_id_product, async(req,res,next)=> {
+router.post('/', verify_token, /* is_admin,  */validator_product, next_id_product, async(req,res,next)=> {
     try {
         await manager.add_product(req.body)
         return res.status(201).json({ status:201,message:'Product created!' })
