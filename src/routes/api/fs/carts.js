@@ -1,12 +1,12 @@
 import { Router } from "express"
-import manager from './../../managers/Cart.js'
-import next_id_cart from "../../middlewares/next_id_cart.js"
-import exists_product from "../../middlewares/exists_product.js"
-import exists_cart from "../../middlewares/exists_cart.js"
-import is_stock from "../../middlewares/is_stock.js"
-import stock_quit from "../../middlewares/stock_quit.js"
-import is_quantity from "../../middlewares/is_quantity.js"
-import stock_add from "../../middlewares/stock_add.js"
+import manager from '../../../managers/Cart.js'
+import next_id_cart from "../../../middlewares/exists_product.js"
+import exists_product from "../../../middlewares/exists_product.js"
+import exists_cart from "../../../middlewares/exists_cart.js"
+import is_stock from "../../../middlewares/is_stock.js"
+import stock_quit from "../../../middlewares/stock_quit.js"
+import is_quantity from "../../../middlewares/is_quantity.js"
+import stock_add from "../../../middlewares/stock_add.js"
 
 const router = Router()
 

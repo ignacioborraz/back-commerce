@@ -1,12 +1,12 @@
 import { Router } from "express";
-import User from "../../models/user.model.js";
-import is_form_ok from "../../middlewares/is_form_ok.js";
-import is_8_char from "../../middlewares/is_8_char.js";
-import create_hash from "../../middlewares/create_hash.js";
-import is_valid_user from "../../middlewares/is_valid_user.js";
-import is_valid_pass from "../../middlewares/is_valid_pass.js";
+//import User from "../../../models/user.model";
+import is_form_ok from "../../../middlewares/is_form_ok.js";
+import is_8_char from "../../../middlewares/is_8_char.js";
+import create_hash from "../../../middlewares/create_hash.js";
+//import is_valid_user from "../../../middlewares/is_valid_user.js";
+import is_valid_pass from "../../../middlewares/is_valid_pass.js";
 import passport from "passport";
-import create_token from "../../middlewares/create_token.js";
+import create_token from "../../../middlewares/create_token.js";
 
 const router = Router();
 
