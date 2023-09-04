@@ -89,8 +89,9 @@ router.post(
   }
 );
 
-router.get("/signout", async (req, res, next) => {
+router.post("/signout", async (req, res, next) => {
   try {
+    console.log(req.session);
     req.session.destroy();
     return res.status(200).json({
       success: true,
