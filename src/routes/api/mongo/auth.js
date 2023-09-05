@@ -77,11 +77,35 @@ router.post(
     try {
       req.session.mail = req.body.mail;
       req.session.role = req.user.role;
-      return res.status(200).json({
-        user: req.user,
-        //session: req.session,
-        message: req.session.mail + " inicio sesión",
-        token: req.session.token
+      return res
+        .status(200)
+        .cookie("token", req.session.token, {
+          maxAge: 60 * 60 * 24 * 7 * 1000,
+          httpOnly: false,
+        })
+        .json({
+          user: req.user,
+          //session: req.session,
+          message: req.session.mail + " inicio sesión",
+          token: req.session.token,
+        });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/signout",
+  passport.authenticate("jwt"),
+  async (req, res, next) => {
+    try {
+      console.log(req.session);
+      req.session.destroy();
+      return res.status(200).clearCookie("token").json({
+        success: true,
+        message: "sesion cerrada",
+        response: req.session,
       });
     } catch (error) {
       next(error);
@@ -89,33 +113,26 @@ router.post(
   }
 );
 
-router.post("/signout", async (req, res, next) => {
-  try {
-    console.log(req.session);
-    req.session.destroy();
-    return res.status(200).json({
-      success: true,
-      message: "sesion cerrada",
-      dataSession: req.session,
-    });
-  } catch (error) {
-    next(error);
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:mail"] }),
+  (req, res) => {}
+);
+router.get(
+  "/github/callback",
+  passport.authenticate("github", {}),
+  (req, res, next) => {
+    try {
+      req.session.mail = req.user.mail;
+      req.session.role = req.user.role;
+      return res.status(200).json({
+        success: true,
+        user: req.user,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
-
-router.get('/github',passport.authenticate('github',{ scope:['user:mail']}),(req,res)=>{})
-router.get('/github/callback',passport.authenticate('github',{}),(req,res,next)=>{
-  try {
-    req.session.mail = req.user.mail;
-    req.session.role = req.user.role;
-    return res.status(200).json({
-      success:true,
-      user:req.user
-    })
-  } catch (error) {
-    next(error)
-  }
-})
-
+);
 
 export default router;

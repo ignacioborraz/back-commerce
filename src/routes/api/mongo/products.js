@@ -1,11 +1,15 @@
 import is_admin from "../../../middlewares/is_admin.js";
-import verify_token from "../../../middlewares/verify_token.js";
+//import verify_token from "../../../middlewares/verify_token.js";
+import passport from "passport";
+//import passport_call from "../../../middlewares/passport_call.js";
 import Product from "../../../models/product.model.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.post("/", verify_token, is_admin, async (req, res, next) => {
+//router.post("/", passport_call('jwt'), is_admin, async (req, res, next) => {
+router.post("/", passport.authenticate('jwt'), is_admin, async (req, res, next) => {
+//router.post("/", verify_token, is_admin, async (req, res, next) => {
   try {
     await Product.create(req.body);
     return res.status(201).json({ success: true, response: "product created" });

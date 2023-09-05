@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import GhStrategy from "passport-github2";
+import jwt from "passport-jwt";
 import User from "../models/user.model.js";
 
 export default function () {
@@ -76,6 +77,30 @@ export default function () {
           }
         } catch (error) {
           return done(error);
+        }
+      }
+    )
+  );
+  passport.use(
+    "jwt",
+    new jwt.Strategy(
+      {
+        jwtFromRequest: jwt.ExtractJwt.fromExtractors([
+          (req) => req?.cookies["token"],
+        ]),
+        secretOrKey: process.env.SECRET_KEY,
+      },
+      async (payload, done) => {
+        try {
+          console.log(payload);
+          let one = await User.findOne({ mail: payload.mail });
+          if (one) {
+            done(null, one); //done(null,one) INYECTA la propiedad req.user con los datos encontrados en one
+          } else {
+            done(null);
+          }
+        } catch (error) {
+          done(error);
         }
       }
     )

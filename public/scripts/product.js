@@ -25,9 +25,9 @@ fetch("/api/products/" + id)
   .catch((err) => console.log(err));
 
 async function addToCart() {
-  let token = document.cookie;
-  console.log('token: '+token);
-  if (token?.includes('token')) {
+  //let token = localStorage.getItem('token')
+  let token = document.cookie.includes('token=')
+  if (token) {
     let selector = document.querySelector('input[type="number"]');
     let quantity = selector.value;
     if (quantity > 0) {
