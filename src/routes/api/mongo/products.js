@@ -8,15 +8,22 @@ import { Router } from "express";
 const router = Router();
 
 //router.post("/", passport_call('jwt'), is_admin, async (req, res, next) => {
-router.post("/", passport.authenticate('jwt'), is_admin, async (req, res, next) => {
-//router.post("/", verify_token, is_admin, async (req, res, next) => {
-  try {
-    await Product.create(req.body);
-    return res.status(201).json({ success: true, response: "product created" });
-  } catch (error) {
-    next(error);
+router.post(
+  "/",
+  passport.authenticate("jwt"),
+  is_admin,
+  async (req, res, next) => {
+    //router.post("/", verify_token, is_admin, async (req, res, next) => {
+    try {
+      await Product.create(req.body);
+      return res
+        .status(201)
+        .json({ success: true, response: "product created" });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get("/", async (req, res, next) => {
   try {
