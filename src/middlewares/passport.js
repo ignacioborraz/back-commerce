@@ -100,6 +100,7 @@ export default function () {
             done(null);
           }
         } catch (error) {
+          console.log(error);
           done(error);
         }
       }

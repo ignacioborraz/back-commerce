@@ -1,11 +1,11 @@
 import is_admin from "../../../middlewares/is_admin.js";
-import verify_token from "../../../middlewares/verify_token.js";
+import verify_token_local from "../../../middlewares/verify_token_local.js";
 import Cart from "../../../models/cart.model.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.post("/", verify_token, is_admin, async (req, res, next) => {
+router.post("/", verify_token_local, is_admin, async (req, res, next) => {
   try {
     await Cart.create(req.body);
     return res.status(201).json({ success: true, response: "cart created" });

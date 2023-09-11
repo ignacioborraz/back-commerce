@@ -7,6 +7,8 @@ import create_hash from "../../../middlewares/create_hash.js";
 import is_valid_pass from "../../../middlewares/is_valid_pass.js";
 import passport from "passport";
 import create_token from "../../../middlewares/create_token.js";
+import verify_token_cookies from "../../../middlewares/verify_token_cookies.js";
+import verify_token_local from "../../../middlewares/verify_token_local.js";
 
 const router = Router();
 
@@ -81,12 +83,13 @@ router.post(
         .status(200)
         .cookie("token", req.session.token, {
           maxAge: 60 * 60 * 24 * 7 * 1000,
-          httpOnly: false,
+          httpOnly: true,
         })
         .json({
+          status: 200,
           user: req.user,
           //session: req.session,
-          message: req.session.mail + " inicio sesión",
+          response: req.session.mail + " inicio sesión",
           token: req.session.token,
         });
     } catch (error) {
@@ -95,17 +98,55 @@ router.post(
   }
 );
 
-router.post(
+/* router.post(
   "/signout",
-  passport.authenticate("jwt"),
+  verify_token_local,
   async (req, res, next) => {
     try {
       console.log(req.session);
       req.session.destroy();
+      return res.status(200).json({
+        status: 200,
+        response: "sesion cerrada",
+        session: req.session,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+); */
+
+/* router.post(
+  "/signout",
+  verify_token_cookies,
+  async (req, res, next) => {
+    try {
+      console.log(req.session);
+      console.log(req.cookies);
+      req.session.destroy();
       return res.status(200).clearCookie("token").json({
-        success: true,
-        message: "sesion cerrada",
-        response: req.session,
+        status: 200,
+        response: "sesion cerrada",
+        session: req.session,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+); */
+
+router.post(
+  "/signout",
+  passport.authenticate('jwt'),
+  async (req, res, next) => {
+    try {
+      console.log(req.session);
+      console.log(req.cookies);
+      req.session.destroy();
+      return res.status(200).clearCookie("token").json({
+        status: 200,
+        response: "sesion cerrada",
+        session: req.session,
       });
     } catch (error) {
       next(error);
