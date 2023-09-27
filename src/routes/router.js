@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { User } from "../dao/factory.js";
 
 export default class MyRouter {
   constructor() {
@@ -24,6 +25,31 @@ export default class MyRouter {
     res.sendNotFound = (payload) =>
       res.status(404).json({ response: null, message: payload + " not found" });
     return next();
+  };
+  handlePolicies = (policies) => async (req, res, next) => {
+    if (policies.includes("PUBLIC")) {
+      return next();
+    } else {
+      const token = req?.cookies["token"]
+      if (!token) {
+        return res.sendNoAuthenticatedError("Unauthenticated");
+      } else {
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
+        const model = new User()
+        const user = await model.findOne({ mail: payload.mail });
+        const role = user.role;
+        if (
+          (policies.includes("USER") && role === 0) ||
+          (policies.includes("ADMIN") && role === 1) ||
+          (policies.includes("PREM") && role === 2)
+        ) {
+          req.user = user;
+          return next();
+        } else {
+          return res.sendNoAuthorizatedError("Unauthorized");
+        }
+      }
+    }
   };
   //create
   create(path, ...cbs) {
