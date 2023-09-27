@@ -1,41 +1,40 @@
 {
-  "name": "server-nodejs",
+  "name": "toy-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/server.js",
-    "dev": "nodemon ./src/server.js"
+    "start": "node ./src/server.js --mode prod",
+    "dev": "nodemon ./src/server.js",
+    "fs": "node ./src/server.js -p 8000 --persistence FS",
+    "memory": "node ./src/server.js -p 9000 --persistence MEMORY",
+    "listeners": "node ./src/config/listeners.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ignacioborraz/server-NODEJS.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ignacioborraz/server-NODEJS/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/ignacioborraz/server-NODEJS#readme",
+  "homepage": "",
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.1",
+    "commander": "^11.0.0",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
-    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.2.0",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
-    "passport-github2": "^0.1.12",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
-    "socket.io": "^4.6.1"
+    "session-file-store": "^1.5.0"
   }
 }

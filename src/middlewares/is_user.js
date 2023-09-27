@@ -6,13 +6,14 @@ export default async function (req, res, next) {
     const model = new User();
     const { mail } = req.body;
     let one = await model.readOne(mail);
-    if (!one) {
+    if (one) {
+      req.user = one.response;
       return next();
     } else {
       return res.status(400).json({
         method: req.method,
         path: req.url,
-        message: "invalid user",
+        message: "invalid credentials",
         response: null,
       });
     }
