@@ -30,12 +30,12 @@ export default class MyRouter {
     if (policies.includes("PUBLIC")) {
       return next();
     } else {
-      const token = req?.cookies["token"]
+      const token = req?.cookies["token"];
       if (!token) {
         return res.sendNoAuthenticatedError("Unauthenticated");
       } else {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
-        const model = new User()
+        const model = new User();
         const user = await model.findOne({ mail: payload.mail });
         const role = user.role;
         if (
@@ -52,23 +52,28 @@ export default class MyRouter {
     }
   };
   //create
-  create(path, ...cbs) {
-    this.router.post(path, this.applyCb(cbs));
+  create(path, policies, ...cbs) {
+    this.router.post(path, this.handlePolicies(policies), this.applyCb(cbs));
   }
   //read
-  read(path, ...cbs) {
-    this.router.get(path, this.applyCb(cbs));
+  read(path, policies, ...cbs) {
+    this.router.get(path, this.handlePolicies(policies), this.applyCb(cbs));
   }
   //update
-  update(path, ...cbs) {
-    this.router.put(path, this.applyCb(cbs));
+  update(path, policies, ...cbs) {
+    this.router.put(path, this.handlePolicies(policies), this.applyCb(cbs));
   }
   //destroy
-  destroy(path, ...cbs) {
-    this.router.delete(path, this.applyCb(cbs));
+  destroy(path, policies, ...cbs) {
+    this.router.delete(path, this.handlePolicies(policies), this.applyCb(cbs));
   }
   //use
-  use(path, ...cbs) {
-    this.router.use(path, this.responses, this.applyCb(cbs));
+  use(path, policies, ...cbs) {
+    this.router.use(
+      path,
+      this.handlePolicies(policies),
+      this.responses,
+      this.applyCb(cbs)
+    );
   }
 }
