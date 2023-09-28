@@ -14,8 +14,9 @@ switch (args.persistence) {
   default: //"MONGO"
     const mongo = new MongoConnect(env.LINK_DB);
     mongo.connect_mongo();
-    //const { default: UserMongo } = await import("../dao/mongo/users.mongo.js");
-    //dao = { User: UserMongo };
+    const { default: OrderMongo } = await import("./mongo/orders.mongo.js");
+    const { default: AuthMongo } = await import("./mongo/users.mongo.js");
+    dao = { Order: OrderMongo, User: AuthMongo };
     break;
 }
 
