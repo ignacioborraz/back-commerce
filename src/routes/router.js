@@ -23,8 +23,15 @@ export default class MyRouter {
   responses = (req, res, next) => {
     res.sendSuccessCreate = (payload) => res.status(201).json(payload);
     res.sendSuccess = (payload) => res.status(200).json(payload);
+    res.sendNoAuthenticatedError = () =>
+      res.status(401).json({ response: null, message: "Unauthenticated" });
+    res.sendNoAuthorizatedError = () =>
+      res.status(403).json({ response: null, message: "Unauthorized" });
     res.sendNotFound = (payload) =>
-      res.status(404).json({ response: null, message: payload + " not found" });
+      (res.sendNotFound = (payload) =>
+        res
+          .status(404)
+          .json({ response: null, message: payload + " not found" }));
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
@@ -33,7 +40,7 @@ export default class MyRouter {
     } else {
       const token = req?.cookies["token"];
       if (!token) {
-        return res.sendNoAuthenticatedError("Unauthenticated");
+        return res.sendNoAuthenticatedError();
       } else {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
         const model = new User();
@@ -47,7 +54,7 @@ export default class MyRouter {
           req.user = user;
           return next();
         } else {
-          return res.sendNoAuthorizatedError("Unauthorized");
+          return res.sendNoAuthorizatedError();
         }
       }
     }

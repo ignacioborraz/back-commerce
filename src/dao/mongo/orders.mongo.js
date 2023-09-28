@@ -20,26 +20,26 @@ export default class OrderMongo {
       return null;
     }
   }
-  async update(id,data) {
-		let one = await Order.findByIdAndUpdate(id,data,{new:true})
-		if (one) {
-			return {
-				message: "order updated",
-				response: one
-			}
-		} else {
-			return null
-		}
-	}
+  async update(id, data) {
+    let one = await Order.findByIdAndUpdate(id, data, { new: true });
+    if (one) {
+      return {
+        message: "order updated",
+        response: one,
+      };
+    } else {
+      return null;
+    }
+  }
   async destroy(id) {
-		let one = await Order.findOneAndDelete({ _id:id })
-		if (one) {
-			return {
-				message: "order deleted",
-				response: one
-			}
-		} else {
-			return null
-		}
-	}
+    let one = await Order.findOneAndDelete({ _id: id });
+    if (one) {
+      return {
+        message: "order deleted",
+        response: one,
+      };
+    } else {
+      return null;
+    }
+  }
 }

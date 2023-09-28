@@ -19,5 +19,5 @@ let schema = new Schema(
   }
 );
 
-let Order = model(collection,schema)
-export default Order
+let Order = model(collection, schema);
+export default Order;
