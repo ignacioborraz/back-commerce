@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { User } from "../dao/factory.js";
+import dao from "../dao/factory.js";
+const { User } = dao;
 
 export default class MyRouter {
   constructor() {
