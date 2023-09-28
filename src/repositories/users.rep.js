@@ -14,4 +14,5 @@ export default class AuthRepository {
   login = () => this.model.login();
   signout = () => this.model.signout();
   readOne = (mail) => this.model.readOne(mail);
+  readById = (id) => this.model.readById(id);
 }

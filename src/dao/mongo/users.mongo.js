@@ -29,4 +29,12 @@ export default class AuthMongo {
       return null;
     }
   }
+  readById(id) {
+    let one = User.findById(id);
+    if (one) {
+      return one;
+    } else {
+      return null;
+    }
+  }
 }

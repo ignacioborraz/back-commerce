@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import cors from "cors"
+import cors from "cors";
 
 import env from "./config/env.js";
 import { __dirname } from "./config/utils.js";
@@ -23,7 +23,7 @@ server.use(sessions);
 inicializePassport();
 server.use(passport.initialize());
 server.use(passport.session());
-server.use(cors())
+server.use(cors());
 server.use(morgan("dev"));
 server.use("/", express.static("public"));
 server.use(express.json());

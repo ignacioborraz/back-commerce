@@ -1,11 +1,10 @@
 import { compareSync } from "bcrypt";
-import dao from "../dao/factory.js";
-const { User } = dao;
+import AuthService from "../services/users.service.js";
 
 export default async function (req, res, next) {
   let password_from_form = req.body.password;
-  const model = new User();
-  let user = await model.readOne(req.body.mail);
+  const User = new AuthService();
+  let user = await User.readOne(req.body.mail);
   let password_hash = user.response.password;
   if (password_hash) {
     let verified = compareSync(password_from_form, password_hash);

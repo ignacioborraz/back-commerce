@@ -1,7 +1,6 @@
 import passport from "passport";
 import jwt from "passport-jwt";
-import dao from "../dao/factory.js";
-const { User } = dao;
+import AuthService from "../services/users.service.js";
 
 export default function () {
   passport.serializeUser((user, done) => {
@@ -10,8 +9,8 @@ export default function () {
   });
   passport.deserializeUser(async (id, done) => {
     //console.log(id);
-    const model = new User();
-    const user = await model.readById(id);
+    const User = new AuthService();
+    const user = await User.readById(id);
     return done(null, user.response);
   });
   passport.use(

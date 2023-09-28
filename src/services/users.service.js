@@ -8,4 +8,5 @@ export default class AuthService {
   login = () => this.repository.login();
   signout = () => this.repository.signout();
   readOne = (mail) => this.repository.readOne(mail);
+  readById = (id) => this.repository.readById(id);
 }

@@ -1,6 +1,5 @@
 import { Router } from "express";
-import dao from "../dao/factory.js";
-const { User } = dao;
+import AuthService from "../services/users.service.js";
 
 export default class MyRouter {
   constructor() {
@@ -43,8 +42,8 @@ export default class MyRouter {
         return res.sendNoAuthenticatedError();
       } else {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
-        const model = new User();
-        const user = await model.findOne({ mail: payload.mail });
+        const User = new AuthService();
+        const user = await User.readOne(payload.mail)
         const role = user.role;
         if (
           (policies.includes("USER") && role === 0) ||
