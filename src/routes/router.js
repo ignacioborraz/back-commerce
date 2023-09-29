@@ -1,6 +1,6 @@
 import { Router } from "express";
 import AuthService from "../services/users.service.js";
-
+z;
 export default class MyRouter {
   constructor() {
     this.router = Router();
@@ -27,10 +27,7 @@ export default class MyRouter {
     res.sendNoAuthorizatedError = () =>
       res.status(403).json({ response: null, message: "Unauthorized" });
     res.sendNotFound = (payload) =>
-      (res.sendNotFound = (payload) =>
-        res
-          .status(404)
-          .json({ response: null, message: payload + " not found" }));
+      res.status(404).json({ response: null, message: payload + " not found" });
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
@@ -43,7 +40,7 @@ export default class MyRouter {
       } else {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
         const User = new AuthService();
-        const user = await User.readOne(payload.mail)
+        const user = await User.readOne(payload.mail);
         const role = user.role;
         if (
           (policies.includes("USER") && role === 0) ||
