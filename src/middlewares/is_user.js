@@ -6,7 +6,7 @@ export default async function (req, res, next) {
     const User = new AuthService();
     let one = await User.readOne(mail);
     if (one) {
-      req.user = one.response;
+      req.user = one;
       return next();
     } else {
       return res.status(400).json({

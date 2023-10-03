@@ -1,6 +1,7 @@
 import { Router } from "express";
 import AuthService from "../services/users.service.js";
-z;
+import jwt from "jsonwebtoken"
+
 export default class MyRouter {
   constructor() {
     this.router = Router();
@@ -22,12 +23,13 @@ export default class MyRouter {
   responses = (req, res, next) => {
     res.sendSuccessCreate = (payload) => res.status(201).json(payload);
     res.sendSuccess = (payload) => res.status(200).json(payload);
+    res.sendFailed = () => res.status(400).json({ message: "Failed", response: null });
     res.sendNoAuthenticatedError = () =>
-      res.status(401).json({ response: null, message: "Unauthenticated" });
+      res.status(401).json({ message: "Unauthenticated", response: null });
     res.sendNoAuthorizatedError = () =>
-      res.status(403).json({ response: null, message: "Unauthorized" });
+      res.status(403).json({ message: "Unauthorized", response: null });
     res.sendNotFound = (payload) =>
-      res.status(404).json({ response: null, message: payload + " not found" });
+      res.status(404).json({ message: payload + " not found", response: null });
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
@@ -41,6 +43,7 @@ export default class MyRouter {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
         const User = new AuthService();
         const user = await User.readOne(payload.mail);
+        user.password = null
         const role = user.role;
         if (
           (policies.includes("USER") && role === 0) ||

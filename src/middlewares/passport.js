@@ -11,7 +11,8 @@ export default function () {
     //console.log(id);
     const User = new AuthService();
     const user = await User.readById(id);
-    return done(null, user.response);
+    console.log(user);
+    return done(null, user);
   });
   passport.use(
     "jwt",
@@ -25,11 +26,12 @@ export default function () {
       async (payload, done) => {
         try {
           //console.log(payload);
-          const model = new User();
+          const model = new AuthService();
           let response = await model.readOne(payload.mail);
+          console.log(response);
           if (response) {
-            response.response.password = null;
-            done(null, response.response);
+            response.password = null;
+            done(null, response);
           } else {
             done(null);
           }
