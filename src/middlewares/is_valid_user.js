@@ -1,11 +1,10 @@
-import dao from "../dao/factory.js";
-const { User } = dao;
+import AuthService from "../services/users.service.js";
 
 export default async function (req, res, next) {
   try {
-    const model = new User();
+    const User = new AuthService();
     const { mail } = req.body;
-    let one = await model.readOne(mail);
+    let one = await User.readOne(mail);
     if (!one) {
       return next();
     } else {

@@ -1,6 +1,6 @@
-import args from "../config/arguments.js"; //para traerme la persistencia
-import MongoConnect from "../config/Mongo.js"; //para traerme la conexion de mongo
-import env from "../config/env.js"; //para traerme las variables de entorno
+import args from "../config/arguments.js";
+import MongoConnect from "../config/Mongo.js";
+import env from "../config/env.js";
 
 let dao = {}; //objeto donde voy a tener los diferentes modelos SEGUN la presistencia elegida al iniciar el srevidor
 

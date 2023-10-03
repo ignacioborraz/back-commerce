@@ -21,4 +21,20 @@ export default class AuthMongo {
       response: true,
     };
   }
+  readOne(mail) {
+    let one = User.findOne({ mail });
+    if (one) {
+      return one;
+    } else {
+      return null;
+    }
+  }
+  readById(id) {
+    let one = User.findById(id);
+    if (one) {
+      return one;
+    } else {
+      return null;
+    }
+  }
 }
