@@ -22,7 +22,7 @@ export default class OrdersRouter extends MyRouter {
       }
     });
     //PARA LEER LAS ORDENES DE UN USUARIO
-    this.read("/", ["USER", "ADMIN", "PREM"], async (req, res, next) => {
+    this.read("/", ["USER", "PREM"], async (req, res, next) => {
       try {
         let user_id = req.user._id;
         //req.user lo agrega la política de privacidad
@@ -66,11 +66,28 @@ export default class OrdersRouter extends MyRouter {
       }
     });
     //PARA COMPRAR TODAS LAS ORDENES, CREAR TICKET Y ELIMINAR LOS DOCS (DEBERIA CAMBIAR DE ESTADO)
-    this.create("/ticket", ["USER", "ADMIN", "PREM"], async (req, res, next) => {
+    this.create(
+      "/ticket",
+      ["USER", "ADMIN", "PREM"],
+      async (req, res, next) => {
+        try {
+          let user_id = req.user._id;
+          //req.user lo agrega la política de privacidad
+          let response = await controller.destroyAll(user_id);
+          if (response) {
+            return res.sendSuccess(response);
+          } else {
+            return res.sendNotFound("order");
+          }
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
+    this.read("/all", ["ADMIN"], async (req, res, next) => {
       try {
-        let user_id = req.user._id;
-        //req.user lo agrega la política de privacidad
-        let response = await controller.destroyAll(user_id);
+        let page = req.query.page || 1;
+        let response = await controller.readAll(page);
         if (response) {
           return res.sendSuccess(response);
         } else {

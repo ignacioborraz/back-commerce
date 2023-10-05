@@ -9,4 +9,5 @@ export default class OrdersService {
   update = (id, data) => this.repository.update(id, data);
   destroy = (id) => this.repository.destroy(id);
   destroyAll = (user_id) => this.repository.destroyAll(user_id);
+  readAll = (page) => this.repository.readAll(page);
 }

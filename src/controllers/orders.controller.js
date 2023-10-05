@@ -9,4 +9,5 @@ export default class OrdersController {
   update = (id, data) => this.service.update(id, data);
   destroy = (id) => this.service.destroy(id);
   destroyAll = (user_id) => this.service.destroyAll(user_id);
+  readAll = (page) => this.service.readAll(page);
 }

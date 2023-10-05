@@ -6,7 +6,7 @@ export default class OrderMongo {
     let one = await Order.create(data);
     return {
       message: "order created",
-      response: "order_id: " + one._id,
+      response: one._id,
     };
   }
   async read(user_id) {
@@ -84,6 +84,17 @@ export default class OrderMongo {
       return {
         message: "orders destroyed",
         response: null,
+      };
+    } else {
+      return null;
+    }
+  }
+  async readAll(page) {
+    let all = await Order.paginate({}, { page, limit: 10 });
+    if (all) {
+      return {
+        message: "orders read",
+        response: all,
       };
     } else {
       return null;
