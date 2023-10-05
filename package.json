@@ -9,7 +9,8 @@
     "dev": "nodemon ./src/server.js",
     "fs": "node ./src/server.js -p 8000 --persistence FS",
     "memory": "node ./src/server.js -p 9000 --persistence MEMORY",
-    "listeners": "node ./src/config/listeners.js"
+    "listeners": "node ./src/config/listeners.js",
+    "data": "node ./src/dao/data/data.mocks.js"
   },
   "repository": {
     "type": "git",
@@ -31,11 +32,15 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mongoose": "^7.2.0",
+    "mongoose-paginate-v2": "^1.7.4",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.5",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "session-file-store": "^1.5.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.1.0"
   }
 }

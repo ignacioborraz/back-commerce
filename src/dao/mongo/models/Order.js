@@ -1,4 +1,5 @@
 import { Schema, model, Types } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
 let collection = "orders";
 let schema = new Schema(
@@ -19,5 +20,6 @@ let schema = new Schema(
   }
 );
 
+schema.plugin(paginate);
 let Order = model(collection, schema);
 export default Order;

@@ -6,7 +6,7 @@ export default class AuthMongo {
     let one = await User.create(data);
     return {
       message: "user registered",
-      response: "user_id: " + one._id,
+      response: one._id,
     };
   }
   login() {
