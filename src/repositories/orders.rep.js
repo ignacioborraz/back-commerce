@@ -11,4 +11,5 @@ export default class OrdersRepository {
   destroy = (id) => this.model.destroy(id);
   destroyAll = (user_id) => this.model.destroyAll(user_id);
   readAll = (page) => this.model.readAll(page);
+  getGain = (user_id) => this.model.getGain(user_id);
 }

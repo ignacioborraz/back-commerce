@@ -91,10 +91,24 @@ export default class OrdersRouter extends MyRouter {
         if (response) {
           return res.sendSuccess(response);
         } else {
-          return res.sendNotFound("order");
+          return res.sendNotFound("orders");
         }
       } catch (error) {
         next(error);
+      }
+    });
+    this.read("/gain", ["USER", "PREM"], async (req, res, next) => {
+      try {
+        //let user_id = "651e1df116e1c54fe5b793c8"
+        let user_id = req.user._id    //passport-politics
+        let response = await controller.getGain(user_id);
+        if (response) {
+          return res.sendSuccess(response);
+        } else {
+          return res.sendNotFound("orders");
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
   }

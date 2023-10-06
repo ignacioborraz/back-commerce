@@ -10,4 +10,5 @@ export default class OrdersService {
   destroy = (id) => this.repository.destroy(id);
   destroyAll = (user_id) => this.repository.destroyAll(user_id);
   readAll = (page) => this.repository.readAll(page);
+  getGain = (user_id) => this.repository.getGain(user_id);
 }
