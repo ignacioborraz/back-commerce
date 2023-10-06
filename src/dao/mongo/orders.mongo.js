@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import Order from "./models/Order.js";
 
 export default class OrderMongo {
@@ -99,5 +100,35 @@ export default class OrderMongo {
     } else {
       return null;
     }
+  }
+  async getGain(user_id) {
+    //necesito el user_id para filtrar por usuario
+    let orders = await Order.find({ user_id }, "type size quantity price -_id");
+    let gain = await Order.aggregate([
+      //0 filtrar por usuario/comprador
+      //match requiere que pasemos el dato EXACTAMENTE IGUAL
+      { $match: { user_id: new Types.ObjectId(user_id) } },
+      //1 agregar propiedad subtotal = precio*cantidad
+      { $set: { subtotal: { $multiply: ["$price", "$quantity"] } } },
+      //2 sumar cada uno de los subtotales
+      { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
+      //3 OPCIONAL subirlo a mongo PERO hay que hacerle algunas transformaciones
+      {
+        $project: {
+          _id: 0,
+          user_id: "$_id",
+          total: "$total",
+          date: new Date(),
+          orders,
+        },
+      },
+      //4 subir a mongo en una nueva colección
+      { $merge: { into: "gains" } },
+    ]);
+    await Order.deleteMany({ user_id });
+    return {
+      response: gain,
+      message: "get gain",
+    };
   }
 }

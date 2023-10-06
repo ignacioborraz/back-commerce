@@ -10,4 +10,5 @@ export default class OrdersController {
   destroy = (id) => this.service.destroy(id);
   destroyAll = (user_id) => this.service.destroyAll(user_id);
   readAll = (page) => this.service.readAll(page);
+  getGain = (user_id) => this.service.getGain(user_id);
 }
