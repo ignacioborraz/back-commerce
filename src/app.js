@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import cors from "cors";
+import compression from "express-compression";
 
 import env from "./config/env.js";
 import { __dirname } from "./config/utils.js";
@@ -18,6 +19,7 @@ const router = new IndexRouter();
 const server = express();
 
 //middlewares
+
 server.use(cookieParser(env.SECRET_COOKIE));
 server.use(sessions);
 inicializePassport();
@@ -28,6 +30,11 @@ server.use(morgan("dev"));
 server.use("/", express.static("public"));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+/* server.use(
+    compression({
+      brotli: { enable: true, zlib: {} },
+    })
+  ); */
 server.use("/api", router.getRouter());
 server.use(errorHandler);
 server.use(notFoundHandler);

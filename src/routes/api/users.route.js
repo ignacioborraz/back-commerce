@@ -56,19 +56,23 @@ export default class AuthRouter extends MyRouter {
         }
       }
     );
-    this.create("/signout", ["PUBLIC"],passport.authenticate('jwt'),async(req,res,next)=> {
-      try {
-        req.session.destroy()
-        let controller = new AuthController()
-        let response = await controller.signout()
-        if (response) {
-          return res.clearCookie('token').sendSuccess(response)
-        } else {
-          return res.clearCookie('token').sendNotFound('user')
+    this.create(
+      "/signout",
+      ["USER", "PREMIUM", "ADMIN"],
+      async (req, res, next) => {
+        try {
+          req.session.destroy();
+          let controller = new AuthController();
+          let response = await controller.signout();
+          if (response) {
+            return res.clearCookie("token").sendSuccess(response);
+          } else {
+            return res.clearCookie("token").sendNotFound("user");
+          }
+        } catch (error) {
+          next(error);
         }
-      } catch (error) {
-        next(error)
       }
-    })
+    );
   }
 }
