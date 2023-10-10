@@ -1,10 +1,10 @@
-const error_handler = (error, req, res, next) => {
-  console.error(error);
-  return res.status(500).json({
+const errorHandler = (error, req, res, next) => {
+  console.log("entró al middleware de manejo de errores");
+  return res.status(error.statusCode).json({
     method: req.method,
     path: req.url,
     message: error.message,
   });
 };
 
-export default error_handler;
+export default errorHandler;
