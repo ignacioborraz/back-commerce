@@ -4,8 +4,6 @@ import jwt from "jsonwebtoken";
 import MyError from "../config/MyError.js";
 import errors from "../config/errors.js";
 
-const { failed, authenticated, authorized, notFound } = errors;
-
 export default class MyRouter {
   constructor() {
     this.router = Router();
@@ -27,44 +25,39 @@ export default class MyRouter {
   responses = (req, res, next) => {
     res.sendSuccessCreate = (payload) => res.status(201).json(payload);
     res.sendSuccess = (payload) => res.status(200).json(payload);
-    res.sendFailed = () => MyError.newError(failed.message, failed.code);
-    res.sendNoAuthenticatedError = () => {
-      consolelog('entró a la función respuesta')
-      MyError.newError(authenticated.message, authenticated.code);
-    }
-    res.sendNoAuthorizatedError = () =>
-      MyError.newError(authorized.message, authorized.code);
-    res.sendNotFound = (payload) => {
-      const notF = notFound(payload);
-      return MyError.newError(notF.message, notF.code);
-    };
+    res.sendFailed = () => MyError.newError(errors.failed);
+    res.sendNoAuth = () => MyError.newError(errors.auth);
+    res.sendInvalidCred = () => MyError.newError(errors.credentials);
+    res.sendForbidden = () => MyError.newError(errors.forbidden);
+    res.sendNotFound = (payload) => MyError.newError(errors.notFound(payload));
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
-    if (policies.includes("PUBLIC")) {
-      return next();
-    } else {
-      const token = req?.cookies["token"];
-      if (!token) {
-        console.log('no hay token');
-        return res.sendNoAuthenticatedError();
+    try {
+      if (policies.includes("PUBLIC")) {
+        return next();
       } else {
-        const payload = jwt.verify(token, process.env.SECRET_KEY);
-        const User = new AuthService();
-        const user = await User.readOne(payload.mail);
-        user.password = null;
-        const role = user.role;
-        if (
-          (policies.includes("USER") && role === 0) ||
-          (policies.includes("ADMIN") && role === 1) ||
-          (policies.includes("PREM") && role === 2)
-        ) {
-          req.user = user;
-          return next();
-        } else {
-          return res.sendNoAuthorizatedError();
+        const token = req?.cookies["token"];
+        if (token) {
+          const payload = jwt.verify(token, process.env.SECRET_KEY);
+          const User = new AuthService();
+          const user = await User.readOne(payload.mail);
+          user.password = null;
+          const role = user.role;
+          if (
+            (policies.includes("USER") && role === 0) ||
+            (policies.includes("ADMIN") && role === 1) ||
+            (policies.includes("PREM") && role === 2)
+          ) {
+            req.user = user;
+            return next();
+          }
+          return res.sendForbidden();
         }
+        return res.sendInvalidCred();
       }
+    } catch (error) {
+      return next(error);
     }
   };
   //create

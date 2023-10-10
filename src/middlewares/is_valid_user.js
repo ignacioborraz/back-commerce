@@ -8,12 +8,7 @@ export default async function (req, res, next) {
     if (!one) {
       return next();
     } else {
-      return res.status(400).json({
-        method: req.method,
-        path: req.url,
-        message: "invalid user",
-        response: null,
-      });
+      return res.sendInvalidCred();
     }
   } catch (error) {
     return next(error);
