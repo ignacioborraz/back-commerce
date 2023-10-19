@@ -1,0 +1,24 @@
+config:
+  pluggins:
+    metrics-by-endpoint: {}
+  target: http://localhost:7000/api
+  phases:
+    - duration: 30
+      arrivalRate: 30
+scenarios:
+  - name: create, update & destroy one order
+    flow:
+      - log: "create order"
+      - post:
+          url: /fake
+          capture:
+            - json: "$.response"
+              as: "oid"
+      - log: "update order"
+      - put:
+          url: /fake/{{oid}}
+          json:
+            price: 5
+      - log: "destroy order"
+      - delete:
+          url: /fake/{{oid}}
