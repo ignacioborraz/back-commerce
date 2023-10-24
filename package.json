@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./src/server.js --mode prod",
-    "dev": "nodemon ./src/server.js",
+    "dev": "nodemon ./src/server.js -p 9099",
     "fs": "node ./src/server.js -p 8000 --persistence FS",
     "memory": "node ./src/server.js -p 9000 --persistence MEMORY",
     "listeners": "node ./src/config/listeners.js",
@@ -14,7 +14,11 @@
     "test-simple": "artillery quick --count 40 --num 50 'http://localhost:7000/api/simple' -o ./src/tests/performance/simple.json",
     "test-complex": "artillery quick --count 40 --num 50 'http://localhost:7000/api/complex' -o ./src/tests/performance/complex.json",
     "test-advance": "artillery run ./src/tests/performance/advance.yaml --output ./src/tests/performance/advance.json",
-    "test-report": "artillery report ./src/tests/performance/advance.json"
+    "test-report": "artillery report ./src/tests/performance/advance.json",
+    "image-prod": "docker build -t eats-prod .",
+    "container-prod": "docker run -p 9110:9090 eats-prod",
+    "image-dev": "docker build -t eats-dev .",
+    "container-dev": "docker run -p 9099:9099 eats-dev"
   },
   "repository": {
     "type": "git",

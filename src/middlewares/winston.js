@@ -1,9 +1,9 @@
-import logger from "../config/logger.js";
+import logger from "../config/loggers/factory.js";
 
 export default (req, res, next) => {
   req.logger = logger;
   req.logger.HTTP(
-    `${req.method} ${req.url} - ${new Date().toLocaleTimeString()}`
+    `${req.method} ${req.url} - ${new Date().toLocaleTimeString()} - ${process.pid}`
   );
   return next();
 };

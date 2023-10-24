@@ -1,4 +1,4 @@
-import logger from "../config/logger.js";
+import logger from "../config/loggers/factory.js";
 
 const not_found_handler = (req, res, next) => {
   req.logger = logger;

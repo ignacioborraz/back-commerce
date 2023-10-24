@@ -1,4 +1,4 @@
-import logger from "../config/logger.js";
+import logger from "../config/loggers/factory.js";
 
 const errorHandler = (error, req, res, next) => {
   req.logger = logger;
