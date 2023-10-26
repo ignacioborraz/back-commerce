@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eatsservice
+spec:
+  selector:
+    app: eats
+  ports:
+    - port: 80
+      targetPort: 9099
+  type: LoadBalancer

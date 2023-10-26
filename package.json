@@ -16,9 +16,14 @@
     "test-advance": "artillery run ./src/tests/performance/advance.yaml --output ./src/tests/performance/advance.json",
     "test-report": "artillery report ./src/tests/performance/advance.json",
     "image-prod": "docker build -t eats-prod .",
-    "container-prod": "docker run -p 9110:9090 eats-prod",
+    "container-prod": "docker run -p 9090:9090 eats-prod",
     "image-dev": "docker build -t eats-dev .",
-    "container-dev": "docker run -p 9099:9099 eats-dev"
+    "container-dev": "docker run -p 9099:9099 eats-dev",
+    "prepair-dev": "docker tag eats-dev ignacioborraz/eats:1.0.0",
+    "push-dev": "docker push ignacioborraz/eats:1.0.0",
+    "create-service": "kubectl apply -f ./src/config/kube/service.kube.yaml",
+    "create-deployment": "kubectl apply -f ./src/config/kube/deployment.kube.yaml",
+    "get-service": "minikube service eatsservice"
   },
   "repository": {
     "type": "git",
